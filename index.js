@@ -25,6 +25,8 @@ app.use(passport.session());
 // Services
 require('./services');
 
+app.use(express.json());
+
 // Routes
 require('./routes')(app);
 
