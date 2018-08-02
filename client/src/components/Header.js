@@ -11,7 +11,7 @@ class Header extends Component{
                    <li><a href='/auth/google'>Login with Google</a></li> 
                 );
             default:
-                return <li><a>Logout</a></li>
+                return <li><a href="/api/logout">Logout</a></li>
         }
     }
     render(){
