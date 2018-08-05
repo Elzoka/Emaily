@@ -15,6 +15,12 @@ const Survey = require('../models/Survey');
 const isLoggedIn = require('../middlewares/isLoggedIn');
 const requireCredits = require('../middlewares/requireCredits');
 
+router.get('/api/surveys', isLoggedIn, async (req, res) => {
+    const surveys = await Survey.find({_user: req.user.id})
+        .select({recipients: false});
+    res.send(surveys);
+});
+
 router.post('/api/surveys', isLoggedIn, requireCredits,async (req, res) => {
     const {title, subject, body, recipients} = req.body;
     const survey = new Survey({
@@ -22,7 +28,7 @@ router.post('/api/surveys', isLoggedIn, requireCredits,async (req, res) => {
         subject,
         body,
         recipients: recipients.split(',').map(email => ({email: email.trim()})),
-        _user: req.user.id,
+        _user: req.user.id, 
         dateSent: Date.now()
     });
     // Send Email
